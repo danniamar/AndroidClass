@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean isFlash;
     private Camera.Parameters param;
     private boolean isFlashOn;
+    ToggleButton toggleButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         //Consulta si el dispositivo tiene camara con flash
         isFlash = getApplicationContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
 
-        if(!isFlash){
+        if(isFlash){
             Log.e(TAG, "No hay Flash");
             //Constructor AlertDialog
             AlertDialog.Builder builder = new AlertDialog.Builder(this)
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             alertDialog.show();
         }
 
-            ToggleButton toggleButton = (ToggleButton) findViewById(R.id.toggleButton);
+            toggleButton = (ToggleButton) findViewById(R.id.toggleButton);
             toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -61,12 +62,12 @@ public class MainActivity extends AppCompatActivity {
                     else turnOffFlash();
                 }
             });
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+
         int rc= ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
         if (rc == PackageManager.PERMISSION_GRANTED){
             getCamara();
@@ -74,6 +75,35 @@ public class MainActivity extends AppCompatActivity {
             requestCameraPermission();
         }
 
+        /*Log.e(TAG, " onStart " + toggleButton.getTextOn());
+
+        if(toggleButton.getText().equals(toggleButton.getTextOn())) {
+            isFlashOn = false;
+            turnOnFlash();
+        }
+        else turnOffFlash();*/
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(isFlashOn) ledOn();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if(camera!=null){
+            camera.release();
+            camera = null;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e(TAG, "Evento onDestroy");
     }
 
     private void requestCameraPermission() {
@@ -94,17 +124,20 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void ledOn() {
+        if(camera==null || param == null){
+            return;
+        }
+        param.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+        camera.setParameters(param);
+        //enciende la camara
+        camera.startPreview();
+        isFlashOn = true;
+    }
+
     private void turnOnFlash() {
         if(!isFlashOn){
-            if(camera==null || param == null){
-                return;
-            }
-            param.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
-            camera.setParameters(param);
-            //enciende la camara
-            camera.startPreview();
-            isFlash = true;
-        }else{
+           ledOn();
             Log.e(TAG, "Flash encendido...");
         }
     }
@@ -118,8 +151,8 @@ public class MainActivity extends AppCompatActivity {
             camera.setParameters(param);
             //enciende la camara
             camera.stopPreview();
-            isFlash = false;
-        }else{
+            isFlashOn = false;
+
             Log.e(TAG, "Flash apagado...");
         }
     }
