@@ -17,4 +17,15 @@ public class Person implements Serializable {
         this.telefono=telefono;
     }
 
+    public String getnombre() {
+        return nombre;
+    }
+
+    public String getweb() {
+        return web;
+    }
+
+    public int gettelefono() {
+        return telefono;
+    }
 }
