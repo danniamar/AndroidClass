@@ -10,14 +10,21 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.a64.listviewapplication.Main2Activity"
+    tools:context="com.example.a64.listviewapplication.MainActivity"
     tools:showIn="@layout/activity_main2">
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
+        android:layout_weight="1"
         android:layout_alignParentStart="true"
         android:id="@+id/lista"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:id="@+id/recycler"/>
 
 </RelativeLayout>
