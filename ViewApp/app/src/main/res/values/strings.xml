@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">ViewApp</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="import_res">Import</string>
+    <string name="customview">CustomView</string>
+    <string name="noticias">Noticias</string>
+    <string name="salir">Salir</string>
+    <string name="opciones">Opciones</string>
+    <string name="tittle_header">Curso Android</string>
+    <string name="subtitle_header">Entendiendo las vistas</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
