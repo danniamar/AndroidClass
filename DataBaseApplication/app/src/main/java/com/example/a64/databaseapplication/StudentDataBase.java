@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -66,8 +67,8 @@ public class StudentDataBase extends SQLiteOpenHelper {
         for (Student student: studentArrayList){
             ContentValues CV = new ContentValues();
             CV.put(COLUMN_NAME, student.getNombre());
-            CV.put(COLUMN_CARRER, student.getTelefono());
-            CV.put(COLUMN_TELEFONO, student.getCarrera());
+            CV.put(COLUMN_CARRER, student.getCarrera());
+            CV.put(COLUMN_TELEFONO, student.getTelefono());
             db.insert(TABLE_NAME, null, CV);
         }
     }
@@ -82,7 +83,20 @@ public class StudentDataBase extends SQLiteOpenHelper {
     }
 
     public Cursor getByCarrer(String career) {
-        String query = "Select * from students where _carrer like ' "  + career + "'";
+        Log.e("career", " -- " +  career);
+        String query = "Select * from students where _carrer like '"  + career + "'";
         return Database.rawQuery(query, null);
+    }
+
+    public  int updatebyID(Student student, int id){
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_NAME, student.getNombre());
+        cv.put(COLUMN_TELEFONO, student.getTelefono());
+        cv.put(COLUMN_CARRER, student.getCarrera());
+        return Database.update(TABLE_NAME, cv, COLUMN_ID + " = " + id, null  );
+    }
+
+    public void deleteById(long id){
+        Database.delete(TABLE_NAME, COLUMN_ID + " = "+ id, null);
     }
 }

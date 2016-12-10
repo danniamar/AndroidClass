@@ -57,7 +57,9 @@ public class MainActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
                 Cursor cursor =  studentDataBase.getByCarrer(parent.getItemAtPosition(position).toString());
+                Log.e("carrera", parent.getItemAtPosition(position).toString());
                 obtenerLista(cursor);
             }
 
@@ -70,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void obtenerLista(Cursor cursor) {
+        Log.e("cursor", " -- " +  cursor.getCount());
         cursorAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_2, cursor,
                 new String[]{COLUMN_NAME, COLUMN_CARRER}, new int[]{android.R.id.text1,android.R.id.text2}, 1 );
 
