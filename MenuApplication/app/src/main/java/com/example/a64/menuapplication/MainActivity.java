@@ -59,10 +59,10 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, PreviewActivity.class);
                 intent.putExtra("image",resourseId );
                 ActivityOptions options = null;
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+               /* if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                     options = ActivityOptions
                             .makeSceneTransitionAnimation(this, androidRobotView, "robot");
-                }
+                }*/
                 startActivity(intent, options.toBundle());
                 break;
             default:
