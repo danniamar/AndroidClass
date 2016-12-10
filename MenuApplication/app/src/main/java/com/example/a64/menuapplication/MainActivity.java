@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
                /* if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                     options = ActivityOptions
                             .makeSceneTransitionAnimation(this, androidRobotView, "robot");
+
                 }*/
                 startActivity(intent, options.toBundle());
                 break;
